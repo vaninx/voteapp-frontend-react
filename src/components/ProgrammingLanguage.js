@@ -17,13 +17,17 @@ class ProgrammingLanguage extends Component {
 
   componentDidMount () {
     //provide implementation to request language details for current language from the API server
-    axios.get(`http://${this.APIHOSTPORT}/languages/${this.props.id}`).then(
+    axios.get(`https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/languages/${this.props.id}`).then(
       response => this.setState({
         language: response.data,
         loaded: true
       })
     );
   }
+  vote() {
+    axios.post(`https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/vote/${this.props.id}`)
+        .then(() => console.log("Vote cast for " + this.props.id));
+}
 
   render () {
     //provide implementation for the render function to render the HTML for the ProgrammingLanguage component

@@ -18,9 +18,10 @@ class Vote extends Component{
   handleClick () {
     //implement the handleClick function which will be called when the user clicks on the voting button
     //this invokes an AJAX request to the API to vote on the current programming language
-    var url = `http://${this.APIHOSTPORT}/languages/${this.props.id}/vote`;
-    axios.get(url)
+    var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/vote/${this.props.id}`;
+    axios.post(url)
       .then(response => this.setState({vote: this.state.vote+1}))
+      .catch(error => console.error(error));
   }
 
   render () {
