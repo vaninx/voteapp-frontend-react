@@ -36,8 +36,11 @@ appArgs3.push(new Uint8Array(Buffer.from(nodejs)));
         console.log("Reading global state...");
         await readGlobalState(algodClient, index);
 
+        // Voting for each programming language by calling the application with the respective arguments. After each vote, we wait for confirmation and then read the global state again to see the updated vote counts.
         let params = await algodClient.getTransactionParams().do();
         console.log("Voting for Go...");
+
+        // We create an application call transaction with the appropriate arguments to cast a vote for the "Go" programming language. The transaction is signed and sent to the network, and we wait for confirmation before proceeding.
         let txn = algosdk.makeApplicationNoOpTxnFromObject({
             sender: sender,
             suggestedParams: params,
@@ -48,10 +51,12 @@ appArgs3.push(new Uint8Array(Buffer.from(nodejs)));
 
         let signedTxn = txn.signTxn(myaccount.sk);
        
+        // Log the transaction ID for reference and send the signed transaction to the network. We then wait for confirmation to ensure that the transaction has been processed before reading the global state again.
         console.log("Signed transaction with txID: %s", txId);
         await algodClient.sendRawTransaction(signedTxn).do();
         await algosdk.waitForConfirmation(algodClient, txId, 2); 
 
+        // After the transaction is confirmed, we read the pending transaction information to check the results of the application call. We log the application ID that was called and any updates to the global state, which should reflect the new vote count for the "Go" programming language.
         let transactionResponse = await algodClient
         .pendingTransactionInformation(txId)
         .do();
@@ -110,6 +115,7 @@ appArgs3.push(new Uint8Array(Buffer.from(nodejs)));
         }
 
     } catch (err) {
+        // If any errors occur during the voting process, we catch them and log an error message to the console. We also exit the process with a non-zero status code to indicate that the tests failed.
         console.error("Tests failed! ", err);
         process.exit(1); 
     }

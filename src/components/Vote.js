@@ -14,10 +14,15 @@ class Vote extends Component{
     
     this.handleClick = this.handleClick.bind(this)
   }
-
+  componentDidMount() {
+    //implement the componentDidMount function to fetch the current vote count for the programming language and set it in the state
+    var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/votes/${this.props.id}`;
+    axios.get(url)
+      .then(response => this.setState({vote: response.data.votes}))
+      .catch(error => console.error(error));
+  }
   handleClick () {
-    //implement the handleClick function which will be called when the user clicks on the voting button
-    //this invokes an AJAX request to the API to vote on the current programming language
+    //implement the handleClick function which will be called when the user clicks on the voting button, this function should call the API server to cast a vote for the programming language and update the vote count in the state
     var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/vote/${this.props.id}`;
     axios.post(url)
       .then(response => this.setState({vote: this.state.vote+1}))
