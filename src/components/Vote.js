@@ -16,14 +16,14 @@ class Vote extends Component{
   }
   componentDidMount() {
     //implement the componentDidMount function to fetch the current vote count for the programming language and set it in the state
-    var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/votes/${this.props.id}`;
+    var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/votes/${this.props.id}`; //using codespace URL for API server
     axios.get(url)
       .then(response => this.setState({vote: response.data.votes}))
       .catch(error => console.error(error));
   }
   handleClick () {
     //implement the handleClick function which will be called when the user clicks on the voting button, this function should call the API server to cast a vote for the programming language and update the vote count in the state
-    var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/vote/${this.props.id}`;
+    var url = `https://effective-space-spork-wqggg5g5xgjcgxrx-3001.app.github.dev/vote/${this.props.id}`; //using codespace URL for API server
     axios.post(url)
       .then(response => this.setState({vote: this.state.vote+1}))
       .catch(error => console.error(error));
